@@ -1,11 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { BrowserProvider, Contract } from "ethers";
 import GameLoader from "./GameLoader";
+import contractABI from "./contractABI.json";
+const CONTRACT_ADDRESS = "0x68cc57d9372a336e43d5aa2d275800775c38f404";
 
 const EventsPage = () => {
   const navigate = useNavigate();
+  const [wallets, setWallets] = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
   const [isLoading, setIsLoading] = useState(false);
+  const [walletAddress, setWalletAddress] = useState(null);
+  const [contract, setContract] = useState(null);
+
+  const fetchWallet = async () => {
+    try {
+      if (!window.ethereum) {
+        alert("MetaMask is not installed!");
+        return;
+      }
+
+      const provider = new BrowserProvider(window.ethereum);
+      const accounts = await provider.send("eth_requestAccounts", []);
+      const signer = await provider.getSigner();
+
+      // alert(accounts[0]);
+      setWalletAddress(accounts[0]);
+      const contractInstance = new Contract(
+        CONTRACT_ADDRESS,
+        contractABI,
+        signer
+      );
+      //alert("Wallet connected successfully!");
+      setContract(contractInstance);
+    } catch (error) {
+      console.error("Failed to connect wallet:", error);
+    }
+  };
+
+  const registerPlayer = async () => {
+    try {
+      if (!contract || !walletAddress) {
+        alert("Please connect wallet first!");
+        return;
+      }
+
+      setIsLoading(true);
+      const tx = await contract.register(walletAddress);
+      await tx.wait();
+
+      alert("Player registered successfully!");
+      navigate("/dashboard");
+      // setIsRegistered(true);
+    } catch (error) {
+      console.error("Registration failed:", error);
+      alert("Registration failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchWallet();
+  }, []);
 
   const events = [
     {
@@ -145,7 +202,7 @@ const EventsPage = () => {
                 <div className="mt-auto">
                   {event.isActive ? (
                     <button
-                      onClick={() => navigate("/dashboard")}
+                      onClick={registerPlayer}
                       className="w-full py-3 rounded-lg bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition group relative overflow-hidden"
                     >
                       <span className="relative z-10">Enter</span>
