@@ -9,34 +9,30 @@ const LandingPage = () => {
 
   const colorSchemes = {
     cyberpunk: {
-      title: "text-cyan-300 font-['Brush_Script_MT']",
-      subtitle: "text-pink-400 font-['Lucida_Handwriting']",
-      button:
-        "bg-[#00ffff] text-black hover:bg-[#00cccc] font-['Comic_Sans_MS']",
+      title: "text-cyan-300 ",
+      subtitle: "text-pink-400 ",
+      button: "bg-[#00ffff] text-black hover:bg-[#00cccc] ",
       overlay: "bg-black opacity-60",
     },
 
     sunset: {
-      title: "text-orange-200 font-['Brush_Script_MT']",
-      subtitle: "text-amber-300 font-['Lucida_Handwriting']",
-      button:
-        "bg-[#FF6B35] text-white hover:bg-[#F44336] font-['Comic_Sans_MS']",
+      title: "text-orange-200 ",
+      subtitle: "text-amber-300 ",
+      button: "bg-[#FF6B35] text-white hover:bg-[#F44336] ",
       overlay: "bg-black opacity-50",
     },
 
     mint: {
-      title: "text-teal-200 font-['Brush_Script_MT']",
-      subtitle: "text-green-300 font-['Lucida_Handwriting']",
-      button:
-        "bg-[#10B981] text-white hover:bg-[#059669] font-['Comic_Sans_MS']",
+      title: "text-teal-200 ",
+      subtitle: "text-green-300 ",
+      button: "bg-[#10B981] text-white hover:bg-[#059669] ",
       overlay: "bg-black opacity-55",
     },
 
     lavender: {
-      title: "text-purple-300 font-['Brush_Script_MT']",
-      subtitle: "text-indigo-200 font-['Lucida_Handwriting']",
-      button:
-        "bg-[#8A4FFF] text-white hover:bg-[#7930FF] font-['Comic_Sans_MS']",
+      title: "text-purple-300 ",
+      subtitle: "text-indigo-200 ",
+      button: "bg-[#8A4FFF] text-white hover:bg-[#7930FF] f",
       overlay: "bg-black opacity-55",
     },
   };
@@ -52,7 +48,7 @@ const LandingPage = () => {
   }, [isConnected, navigate]);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <div className="relative w-full h-screen overflow-hidden font-oswald">
       <div className="absolute inset-0">
         <video
           className="absolute top-0 left-0 w-full h-full object-cover"
@@ -76,7 +72,7 @@ const LandingPage = () => {
         <p
           className={`text-2xl md:text-xl font-semibold ${scheme.subtitle} drop-shadow-lg`}
         >
-          Unlock Knowledge, Earn Rewards, Own the Journey!
+          Earn Rewards, Own the Journey!
         </p>
         <ConnectButton />
       </div>

@@ -2,8 +2,13 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        barlow: ["Barlow", "sans-serif"],
+        fauna: ["Fauna One", "serif"],
+        oswald: ["Oswald", "sans-serif"],
+      },
+    },
   },
   plugins: [],
-}
-
+};
