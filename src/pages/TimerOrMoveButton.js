@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { BrowserProvider, Contract } from "ethers";
 import contractABI from "./contractABI.json";
 const CONTRACT_ADDRESS = "0xf5E491f0772d7dC4F9dF91d8BEC8642aB97b6De0";
@@ -12,9 +12,6 @@ const TimerOrMoveButton = ({
   setIsMakeMoveActive,
 }) => {
   const [isMoving, setIsMoving] = useState(false);
-  const [isTimerActive, setIsTimerActive] = useState(false);
-  const [timerRemainingTime, setTimerRemainingTime] = useState(0);
-  const [hasMoved, setHasMoved] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const movePlayerStepByStep = (totalSteps) => {
@@ -38,22 +35,19 @@ const TimerOrMoveButton = ({
       } else {
         clearInterval(moveInterval);
         setIsMoving(false);
-        setHasMoved(true);
         setIsMakeMoveActive(false);
       }
     }, 500);
   };
 
   const rollDice = () => {
-    if (isMoving || isTimerActive) return;
+    if (isMoving || isLoading) return;
 
     const diceRoll = Math.floor(Math.random() * 7) + 1;
 
     movePlayerStepByStep(diceRoll);
 
-    setTimerRemainingTime(6);
-    setIsTimerActive(true);
-    nextMove();
+    nextMove(); // Move to the next step after rolling dice
   };
 
   const nextMove = async () => {
@@ -70,33 +64,19 @@ const TimerOrMoveButton = ({
         return;
       }
 
-      setIsLoading(true);
+      setIsLoading(true); // Show loading when waiting for transaction
 
       const tx = await contract.nextMove(wallet);
       await tx.wait();
-      setIsMakeMoveActive(true);
-      setIsTimerActive(false);
-      setHasMoved(false);
+
+      setIsLoading(false); // Stop loading once transaction is completed
+      setIsMakeMoveActive(true); // Enable Make Move again after the transaction is completed
       console.log("Player next move successfully!");
     } catch (error) {
       console.error("Next move failed:", error);
+      setIsLoading(false); // Stop loading if error occurs
     }
   };
-
-  useEffect(() => {
-    if (!isTimerActive) return;
-
-    const countdownInterval = setInterval(() => {
-      setTimerRemainingTime((prevTime) => {
-        if (prevTime <= 1) {
-          clearInterval(countdownInterval);
-        }
-        return prevTime - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(countdownInterval);
-  }, [isTimerActive]);
 
   return (
     <>
@@ -112,13 +92,7 @@ const TimerOrMoveButton = ({
         }}
         onClick={rollDice}
       >
-        {isMoving
-          ? "MOVING..."
-          : isTimerActive
-          ? `Next Chance In: ${timerRemainingTime}s`
-          : isMakeMoveActive
-          ? "MAKE MOVE"
-          : "Wait for Next Move"}
+        {isLoading || isMoving ? "MOVING..." : "MAKE MOVE"}
       </div>
     </>
   );
