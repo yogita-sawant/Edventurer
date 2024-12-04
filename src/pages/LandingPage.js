@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -80,26 +81,7 @@ const LandingPage = () => {
         >
           Unlock Knowledge, Earn Rewards, Own the Journey!
         </p>
-        <button
-          onClick={() => navigate("/events")}
-          className={`
-            ${scheme.button}
-            font-bold 
-            py-2 
-            px-4 
-            rounded-lg 
-            transition-all 
-            duration-300 
-            ease-in-out 
-            shadow-lg 
-            hover:shadow-xl 
-            focus:outline-none 
-            focus:ring-2 
-            focus:ring-opacity-75
-          `}
-        >
-          Login
-        </button>
+        <ConnectButton />
       </div>
     </div>
   );

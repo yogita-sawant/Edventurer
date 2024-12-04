@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@rainbow-me/rainbowkit": "^2.2.1",
     "@react-oauth/google": "^0.12.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -22,6 +23,8 @@
     "react-map-gl": "^7.1.7",
     "react-router-dom": "^7.0.1",
     "react-scripts": "5.0.1",
+    "viem": "^2.21.53",
+    "wagmi": "^2.13.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
