@@ -4,9 +4,7 @@ import { useNavigate } from "react-router-dom";
 const LandingPage = () => {
   const navigate = useNavigate();
 
-  // Color Palette Options with Cursive Fonts
   const colorSchemes = {
-    // Vibrant Neon Cyberpunk
     cyberpunk: {
       title: "text-cyan-300 font-['Brush_Script_MT']",
       subtitle: "text-pink-400 font-['Lucida_Handwriting']",
@@ -15,7 +13,6 @@ const LandingPage = () => {
       overlay: "bg-black opacity-60",
     },
 
-    // Warm Sunset
     sunset: {
       title: "text-orange-200 font-['Brush_Script_MT']",
       subtitle: "text-amber-300 font-['Lucida_Handwriting']",
@@ -24,7 +21,6 @@ const LandingPage = () => {
       overlay: "bg-black opacity-50",
     },
 
-    // Cool Mint
     mint: {
       title: "text-teal-200 font-['Brush_Script_MT']",
       subtitle: "text-green-300 font-['Lucida_Handwriting']",
@@ -33,7 +29,6 @@ const LandingPage = () => {
       overlay: "bg-black opacity-55",
     },
 
-    // Lavender Dream
     lavender: {
       title: "text-purple-300 font-['Brush_Script_MT']",
       subtitle: "text-indigo-200 font-['Lucida_Handwriting']",
@@ -43,12 +38,10 @@ const LandingPage = () => {
     },
   };
 
-  // Select a color scheme (you can change this or make it dynamic)
   const scheme = colorSchemes.lavender;
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
-      {/* Video Background with Overlay */}
       <div className="absolute inset-0">
         <video
           className="absolute top-0 left-0 w-full h-full object-cover"
@@ -60,11 +53,9 @@ const LandingPage = () => {
           Your browser does not support the video tag.
         </video>
 
-        {/* Dark Overlay */}
         <div className={`absolute inset-0 ${scheme.overlay}`}></div>
       </div>
 
-      {/* Content Container */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center space-y-6">
         <h1
           className={`
@@ -76,7 +67,7 @@ const LandingPage = () => {
           animate-pulse
         `}
         >
-          Oasys-Odyssey
+          Edventurer
         </h1>
         <p
           className={`
@@ -87,7 +78,7 @@ const LandingPage = () => {
           drop-shadow-lg
         `}
         >
-          Explore, Earn, and Own the World Around You
+          Unlock Knowledge, Earn Rewards, Own the Journey!
         </p>
         <button
           onClick={() => navigate("/events")}
