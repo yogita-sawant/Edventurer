@@ -14,6 +14,7 @@ const BalanceSection = ({ bal, pos }) => {
       const playerAddress = accounts[0];
       const contract = new Contract(CONTRACT_ADDRESS, contractABI, provider);
       const result = await contract.getPlayerCurrency(playerAddress);
+      localStorage.setItem("playerCurrency", result.toString());
       setCurrency(result.toString());
     } catch (error) {
       console.error("Error reading from contract:", error);

@@ -133,9 +133,21 @@ const DashboardPage = () => {
   const handleMakeMoveStatus = (status) => {
     setIsMakeMoveActive(!status);
   };
-  const handleLoanClick = () => {
-    setShowLoanCard(!showLoanCard);
-  };
+
+  const [playerCurrency, setPlayerCurrency] = useState(
+    parseInt(localStorage.getItem("playerCurrency"), 10) || 0
+  );
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const updatedCurrency =
+        parseInt(localStorage.getItem("playerCurrency"), 10) || 0;
+      console.log("Updated Currency:", updatedCurrency, typeof updatedCurrency);
+      setPlayerCurrency(updatedCurrency);
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <div>
@@ -154,7 +166,7 @@ const DashboardPage = () => {
         setShowLoanCard={setShowLoanCard}
       />
 
-      {showLoanCard && (
+      {showLoanCard && playerCurrency <= 500 && (
         <LoanCard loan={loan} handleLoanClick={() => setShowLoanCard(false)} />
       )}
 
