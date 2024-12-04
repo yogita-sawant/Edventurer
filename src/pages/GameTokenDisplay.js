@@ -1,6 +1,24 @@
 import { Leaf, Target } from "lucide-react";
+import { useState, useEffect } from "react";
+import { BrowserProvider } from "ethers";
 
 const GameTokenDisplay = () => {
+  const [wallet, setWallet] = useState(null);
+
+  const fetchWalletAddress = async () => {
+    try {
+      const provider = new BrowserProvider(window.ethereum);
+      const accounts = await provider.send("eth_requestAccounts", []);
+      setWallet(accounts[0]);
+    } catch (error) {
+      console.error("Error fetching wallet address:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchWalletAddress();
+  }, []);
+
   return (
     <div className="absolute top-4 left-5 bg-gradient-to-br from-green-800 to-emerald-900 text-lime-100 p-4 rounded-xl shadow-lg border-2 border-green-500">
       <div className="flex items-center space-x-4">
@@ -10,7 +28,7 @@ const GameTokenDisplay = () => {
             Game Zone Token
           </span>
           <code className="text-md font-mono bg-green-900/50 px-3 py-2 rounded-md tracking-wider border border-green-600">
-            {/* {wallets} */}
+            {wallet}
           </code>
         </div>
         <Target className="w-10 h-10 text-lime-400 animate-spin" />

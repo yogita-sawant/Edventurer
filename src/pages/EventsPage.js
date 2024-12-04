@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { BrowserProvider, Contract } from "ethers";
 import GameLoader from "./GameLoader";
 import contractABI from "./contractABI.json";
-const CONTRACT_ADDRESS = "0x68cc57d9372a336e43d5aa2d275800775c38f404";
+const CONTRACT_ADDRESS = "0xf5E491f0772d7dC4F9dF91d8BEC8642aB97b6De0";
 
 const EventsPage = () => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const EventsPage = () => {
   const fetchWallet = async () => {
     try {
       if (!window.ethereum) {
-        alert("MetaMask is not installed!");
+        console.log("MetaMask is not installed!");
         return;
       }
 
@@ -24,14 +24,21 @@ const EventsPage = () => {
       const accounts = await provider.send("eth_requestAccounts", []);
       const signer = await provider.getSigner();
 
-      // alert(accounts[0]);
       setWalletAddress(accounts[0]);
       const contractInstance = new Contract(
         CONTRACT_ADDRESS,
         contractABI,
         signer
       );
-      //alert("Wallet connected successfully!");
+      localStorage.setItem("walletAddress", walletAddress);
+      localStorage.setItem(
+        "contractDetails",
+        JSON.stringify({
+          address: CONTRACT_ADDRESS,
+          abi: contractABI,
+        })
+      );
+
       setContract(contractInstance);
     } catch (error) {
       console.error("Failed to connect wallet:", error);
@@ -41,7 +48,7 @@ const EventsPage = () => {
   const registerPlayer = async () => {
     try {
       if (!contract || !walletAddress) {
-        alert("Please connect wallet first!");
+        console.log("Please connect wallet first!");
         return;
       }
 
@@ -49,12 +56,11 @@ const EventsPage = () => {
       const tx = await contract.register(walletAddress);
       await tx.wait();
 
-      alert("Player registered successfully!");
+      console.log("Player registered successfully!");
       navigate("/dashboard");
-      // setIsRegistered(true);
     } catch (error) {
       console.error("Registration failed:", error);
-      alert("Registration failed. Please try again.");
+      console.log("Registration failed. Please try again.");
     } finally {
       setIsLoading(false);
     }

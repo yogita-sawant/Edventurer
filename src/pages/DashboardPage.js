@@ -9,9 +9,6 @@ import LoanCard from "./LoanCard";
 import TimerOrMoveButton from "./TimerOrMoveButton";
 import BalanceSection from "./BalanceSection";
 import carddata from "../data/cards";
-// import { BrowserProvider, Contract } from "ethers";
-// import contractABI from "./contractABI.json";
-// const CONTRACT_ADDRESS = "0x68cc57d9372a336e43d5aa2d275800775c38f404";
 
 const DashboardPage = () => {
   const navigate = useNavigate();
@@ -24,11 +21,10 @@ const DashboardPage = () => {
   const [showMintCard, setShowMintCard] = useState(false);
   const [showLoanCard, setShowLoanCard] = useState(false);
   const [showCardDetails, setShowCardDetails] = useState(false);
-  const [wallets, setWallets] = useState("");
+  // const [wallets, setWallets] = useState("");
   const [bal, setBal] = useState(0);
   const [pos, setPosition] = useState(0);
   const [loan, setLoanAmt] = useState(0);
-  const [card, setCard] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const monopolyLocations = carddata.cards;
@@ -179,23 +175,6 @@ const DashboardPage = () => {
           showMintCard={showMintCard}
         />
       )}
-
-      {/* {walletAddress && (
-        <div
-          className="explore"
-          style={{
-            position: "absolute",
-            top: "40px",
-            right: "20px",
-            padding: "10px",
-            borderRadius: "5px",
-            fontSize: "16px",
-          }}
-          onClick={registerPlayer}
-        >
-          Register Player
-        </div>
-      )} */}
     </div>
   );
 };

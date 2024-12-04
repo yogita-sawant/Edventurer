@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useAccount } from "wagmi";
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const { isConnected } = useAccount();
 
   const colorSchemes = {
     cyberpunk: {
@@ -41,6 +43,14 @@ const LandingPage = () => {
 
   const scheme = colorSchemes.lavender;
 
+  useEffect(() => {
+    if (isConnected) {
+      navigate("/events");
+    } else {
+      console.log("Wallet did not get connected.");
+    }
+  }, [isConnected, navigate]);
+
   return (
     <div className="relative w-full h-screen overflow-hidden">
       <div className="absolute inset-0">
@@ -59,25 +69,12 @@ const LandingPage = () => {
 
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center space-y-6">
         <h1
-          className={`
-          text-5xl 
-          md:text-7xl 
-          font-bold 
-          ${scheme.title}
-          drop-shadow-[0_4px_3px_rgba(0,0,0,0.5)]
-          animate-pulse
-        `}
+          className={`text-5xl md:text-7xl font-bold ${scheme.title} drop-shadow-[0_4px_3px_rgba(0,0,0,0.5)] animate-pulse`}
         >
           Edventurer
         </h1>
         <p
-          className={`
-          text-2xl
-          md:text-xl 
-          font-semibold 
-          ${scheme.subtitle}
-          drop-shadow-lg
-        `}
+          className={`text-2xl md:text-xl font-semibold ${scheme.subtitle} drop-shadow-lg`}
         >
           Unlock Knowledge, Earn Rewards, Own the Journey!
         </p>
